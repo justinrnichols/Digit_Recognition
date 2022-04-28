@@ -1,6 +1,5 @@
 from scipy.linalg import svd, norm
 from sklearn.metrics import accuracy_score, classification_report
-from sklearn.decomposition import PCA
 import h5py
 import matplotlib.pyplot as plt
 import numpy as np
@@ -91,11 +90,18 @@ def split_data():
     return digit_dict
 
 
+''' Output split digit dictionary data to 
+    a file to use for visualization purposes. '''
+def output_split_data(digit_dict):
+    f = open('Visuals/output/split.txt', 'w+')
+    print(digit_dict, file = f)
+
+
 ''' Output image matrix array data for all digits to 
     a file to use for visualization purposes. '''
 def output_digit_data():
     for digit in range(10):
-        f = open('output/' + str(digit) + '.txt', 'w')
+        f = open('Visuals/output/' + str(digit) + '.txt', 'w+')
         for img in range(y_train.size):
             if y_train[img] == digit:
                 print('Picture' + str(img) + ':', file = f)
@@ -116,7 +122,7 @@ def digit_svd(digit_dict):
 ''' Output svd numpy array data for each digit class to a file
     to use for visualization purposes. '''
 def output_svd_data(svd_dict):
-    f = open('output/svd.txt', 'w')
+    f = open('Visuals/output/svd.txt', 'w+')
     for digit in range(10):
         print('Digit' + str(digit) + ':', file = f)
         print(svd_dict[str(digit)], file = f)
@@ -177,7 +183,7 @@ def digit_clearest_images(svd_dict):
 def singular_value_graphs(svd_dict):
     plt.figure(figsize=(15,6))
     for i in range(10):
-        plt.subplot(2,5,i+1)
+        plt.subplot(1,10,i+1)
         plt.plot(svd_dict[str(i)][1], color='royalblue', marker='o')
         plt.title(f'Digit {i} Singular Values')
         plt.xlabel('Count')
@@ -269,14 +275,18 @@ def individual_digit_accuracy(svd_dict):
         digit_scores.append(score)
     plt.figure(figsize=(6,6))
     x = range(10)
-    plt.plot(x, digit_scores, color='royalblue', marker='o')
+    y = np.arange(0.84,1,0.02)
+    plt.bar(x, digit_scores, color='royalblue', width = 0.8)
     plt.title('Accuracy Percentage of Each Digit')
     plt.xlabel('Digit')
     plt.ylabel('Accuracy Percentage')
     plt.xscale('linear')
     plt.yscale('linear')
+    plt.ylim([0.84, 1])
     plt.xticks(x)
+    plt.yticks(y)
     plt.show()
+    print(digit_scores)
 
 
 ''' Output the classification report (precision, recall, 
@@ -314,25 +324,26 @@ def misclassified_images(svd_dict, singular_value):
     
 def main():
     np.set_printoptions(threshold=sys.maxsize)
-    print_train_test_shapes()
-    show_first_10_Img()
-    show_first_Digit_Img()
-    graph_digit_sample_distribution()
+    # print_train_test_shapes()
+    # show_first_10_Img()
+    # show_first_Digit_Img()
+    # graph_digit_sample_distribution()
     digit_dict = split_data()
-    output_digit_data()
-    svd_dict = digit_svd(digit_dict)
-    output_svd_data(svd_dict)
-    rank1_dict = rank1(svd_dict, 12)
-    rank1_graph(rank1_dict)
-    digit_clearest_images(svd_dict)
-    singular_value_graphs(svd_dict)
-    first_N_singular_value_graphs(svd_dict, 20)
-    singular_value_least_squares_predit(svd_dict, 12)
-    singular_value_range_least_squares_predit(svd_dict, 1, 15)
-    accuracy_graph(svd_dict, 1, 20)
-    individual_digit_accuracy(svd_dict)
-    print_classification_report(svd_dict, 12)
-    misclassified_images(svd_dict, 12)
+    # output_split_data(digit_dict)
+    # output_digit_data()
+    # svd_dict = digit_svd(digit_dict)
+    # output_svd_data(svd_dict)
+    # rank1_dict = rank1(svd_dict, 12)
+    # rank1_graph(rank1_dict)
+    # digit_clearest_images(svd_dict)
+    # singular_value_graphs(svd_dict)
+    # first_N_singular_value_graphs(svd_dict, 20)
+    # singular_value_least_squares_predit(svd_dict, 12)
+    # singular_value_range_least_squares_predit(svd_dict, 1, 15)
+    # accuracy_graph(svd_dict, 1, 20)
+    # individual_digit_accuracy(svd_dict)
+    # print_classification_report(svd_dict, 12)
+    # misclassified_images(svd_dict, 12)
 
 
 if __name__ == '__main__': main()

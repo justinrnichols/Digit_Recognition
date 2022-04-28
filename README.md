@@ -26,11 +26,12 @@ as flattened arrays with a size of 256 = 16x16 grayscale pixels.
 ## Technologies and Packages/Modules Used
 
 1. Python using the Anaconda distribution
-2. Skikit-Learn
-3. Numpy
-4. h5py
-5. matplotlib
-6. Microsoft PowerPoint
+2. Scipy
+3. Skikit-Learn
+4. Numpy
+5. h5py
+6. matplotlib
+7. Microsoft PowerPoint
 
 
 ## Project Description
@@ -59,6 +60,7 @@ be performed on all the images that are associated with digit 0.
 - Print train and test shapes
 - Show the first 10 images in the dataset
 - Graph each digit sample distribution
+- Output all split image data
 - Output all image data for a specific digit
 - Output SVD matrix data
 - Output the N rank1 approximation images
